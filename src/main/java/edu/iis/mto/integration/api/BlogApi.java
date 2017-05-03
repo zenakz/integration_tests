@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.iis.mto.integration.api.request.LikePostRequest;
 import edu.iis.mto.integration.api.request.PostRequest;
 import edu.iis.mto.integration.api.request.UserRequest;
 import edu.iis.mto.integration.dto.PostData;
@@ -65,10 +66,19 @@ public class BlogApi {
         return postId;
     }
 
+    @ApiOperation(value = "Add like to blog post")
+    @RequestMapping(method = RequestMethod.POST, path = "/post/{id}/like", produces = "application/json")
+    public Long createPost(@PathVariable("id") Long postId, @RequestBody LikePostRequest likeRequest) {
+        logger.debug("add like to post endpoint called for data '{}'", likeRequest);
+
+        blogService.addLikeToPost(postId, likeRequest);
+        return postId;
+    }
+
     @ApiOperation(value = "get user posts basing on user id")
     @RequestMapping(method = RequestMethod.GET, path = "/user/{id}/post", produces = "application/json")
     public List<PostData> getUserPosts(@PathVariable("id") Long userId) {
-        logger.debug("get user endpoint called for user id '{}'", userId);
+        logger.debug("get user posts endpoint called for user id '{}'", userId);
         List<PostData> posts = finder.getUserPosts(userId);
         return posts;
     }
