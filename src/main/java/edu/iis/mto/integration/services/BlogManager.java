@@ -1,5 +1,7 @@
 package edu.iis.mto.integration.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -8,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.iis.mto.integration.api.request.PostRequest;
 import edu.iis.mto.integration.api.request.UserRequest;
 import edu.iis.mto.integration.domain.model.BlogPost;
+import edu.iis.mto.integration.domain.model.LikePost;
 import edu.iis.mto.integration.domain.model.User;
 import edu.iis.mto.integration.domain.repository.BlogPostRepository;
 import edu.iis.mto.integration.domain.repository.LikePostRepository;
@@ -47,8 +50,18 @@ public class BlogManager implements BlogService {
     }
 
     @Override
-    public void addLikeToPost(Long userId, Long postId) {
-        likePostRepository.findByUserAndPost(userId, postId);
+    public boolean addLikeToPost(Long userId, Long postId) {
+        Optional<LikePost> existingLikeForPost = likePostRepository.findByUserAndPost(userId, postId);
+        if (existingLikeForPost.isPresent()) {
+            return false;
+        }
+        User user = userRepository.findOne(userId);
+        BlogPost post = blogPostRepository.findOne(postId);
+        LikePost likePost = new LikePost();
+        likePost.setUser(user);
+        likePost.setPost(post);
+        likePostRepository.save(likePost);
+        return true;
     }
 
 }

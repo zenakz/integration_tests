@@ -9,6 +9,6 @@ public interface BlogService {
 
     Long createPost(Long userId, PostRequest postRequest);
 
-    void addLikeToPost(Long userId, Long postId);
+    boolean addLikeToPost(Long userId, Long postId);
 
 }
