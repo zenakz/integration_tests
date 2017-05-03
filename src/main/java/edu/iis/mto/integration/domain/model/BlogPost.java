@@ -1,11 +1,13 @@
 package edu.iis.mto.integration.domain.model;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
+@Entity
 public class BlogPost extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
