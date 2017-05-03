@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.iis.mto.integration.api.request.PostRequest;
 import edu.iis.mto.integration.api.request.UserRequest;
-import edu.iis.mto.integration.api.response.ResponseFactory;
-import edu.iis.mto.integration.api.response.UserResponse;
+import edu.iis.mto.integration.dto.PostData;
 import edu.iis.mto.integration.dto.UserData;
-import edu.iis.mto.integration.services.DataFinder;
 import edu.iis.mto.integration.services.BlogService;
+import edu.iis.mto.integration.services.DataFinder;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
@@ -27,36 +27,49 @@ public class BlogApi {
     private final static Logger logger = LoggerFactory.getLogger(BlogApi.class);
 
     @Autowired
-    private BlogService userService;
+    private BlogService blogService;
 
     @Autowired
     private DataFinder finder;
 
-    @Autowired
-    private ResponseFactory responseFactory;
-
     @ApiOperation(value = "Creates new user")
     @RequestMapping(method = RequestMethod.POST, path = "/user", produces = "application/json")
-    public UserResponse createUser(@RequestBody UserRequest userRequest) {
+    public Long createUser(@RequestBody UserRequest userRequest) {
         logger.debug("create user endpoint called for data '{}'", userRequest);
-        Long userId = userService.createUser(userRequest);
-        UserData newUser = finder.findUser(userId);
-        return responseFactory.userResponse(newUser);
+        Long userId = blogService.createUser(userRequest);
+        return userId;
     }
 
     @ApiOperation(value = "get user info basing on user id")
     @RequestMapping(method = RequestMethod.GET, path = "/user/{id}", produces = "application/json")
-    public UserResponse getUser(@PathVariable Long userId) {
+    public UserData getUser(@PathVariable("id") Long userId) {
         logger.debug("get user endpoint called for user id '{}'", userId);
-        UserData newUser = finder.findUser(userId);
-        return responseFactory.userResponse(newUser);
+        UserData newUser = finder.getUserData(userId);
+        return newUser;
     }
 
     @ApiOperation(value = "find users basing on search string")
     @RequestMapping(method = RequestMethod.GET, path = "/user/find", produces = "application/json")
-    public UserResponse findUser(@RequestParam String searchString) {
+    public List<UserData> findUser(@RequestParam String searchString) {
         logger.debug("find users endpoint called for searchString '{}'", searchString);
         List<UserData> users = finder.findUsers(searchString);
-        return responseFactory.usersResponse(users);
+        return users;
+    }
+
+    @ApiOperation(value = "Creates new blog post")
+    @RequestMapping(method = RequestMethod.POST, path = "/user/{id}/post", produces = "application/json")
+    public Long createPost(@PathVariable("id") Long userId, @RequestBody PostRequest postRequest) {
+        logger.debug("create post endpoint called for data '{}'", postRequest);
+
+        Long postId = blogService.createPost(userId, postRequest);
+        return postId;
+    }
+
+    @ApiOperation(value = "get user posts basing on user id")
+    @RequestMapping(method = RequestMethod.GET, path = "/user/{id}/post", produces = "application/json")
+    public List<PostData> getUserPosts(@PathVariable("id") Long userId) {
+        logger.debug("get user endpoint called for user id '{}'", userId);
+        List<PostData> posts = finder.getUserPosts(userId);
+        return posts;
     }
 }
