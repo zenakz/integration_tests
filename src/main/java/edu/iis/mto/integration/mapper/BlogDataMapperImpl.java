@@ -13,7 +13,7 @@ import edu.iis.mto.integration.dto.UserData;
 @Component
 public class BlogDataMapperImpl implements DataMapper {
 
-    private ModelMapper mapper;
+    private ModelMapper mapper = new ModelMapper();
 
     @Override
     public User mapToEntity(UserRequest userRequest) {

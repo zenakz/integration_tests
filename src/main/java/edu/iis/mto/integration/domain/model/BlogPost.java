@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
@@ -15,7 +14,7 @@ public class BlogPost extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "userId", nullable = false)
     private User user;
 
@@ -23,8 +22,8 @@ public class BlogPost extends BaseEntity {
     @Lob
     private String entry;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "likeId", nullable = false)
+    @OneToMany
+    @JoinColumn(name = "postId")
     private List<LikePost> likes;
 
     public BlogPost() {}
