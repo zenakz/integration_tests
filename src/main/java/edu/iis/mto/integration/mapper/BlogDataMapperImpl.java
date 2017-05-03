@@ -1,6 +1,7 @@
 package edu.iis.mto.integration.mapper;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.stereotype.Component;
 
 import edu.iis.mto.integration.api.request.PostRequest;
@@ -13,7 +14,11 @@ import edu.iis.mto.integration.dto.UserData;
 @Component
 public class BlogDataMapperImpl implements DataMapper {
 
-    private ModelMapper mapper = new ModelMapper();
+    private final ModelMapper mapper = new ModelMapper();
+
+    public BlogDataMapperImpl() {
+        configureMapper();
+    }
 
     @Override
     public User mapToEntity(UserRequest userRequest) {
@@ -34,4 +39,17 @@ public class BlogDataMapperImpl implements DataMapper {
     public PostData mapToDto(BlogPost blogPost) {
         return mapper.map(blogPost, PostData.class);
     }
+
+    private void configureMapper() {
+        PropertyMap<BlogPost, PostData> postMap = new PropertyMap<BlogPost, PostData>() {
+
+            @Override
+            protected void configure() {
+                map().setLikesCount(source.getLikes().size());
+
+            }
+        };
+        mapper.addMappings(postMap);
+    }
+
 }
