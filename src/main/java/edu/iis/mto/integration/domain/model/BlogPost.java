@@ -1,11 +1,14 @@
 package edu.iis.mto.integration.domain.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class BlogPost extends BaseEntity {
@@ -20,8 +23,9 @@ public class BlogPost extends BaseEntity {
     @Lob
     private String entry;
 
-    @Column
-    private int likes;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "likeId", nullable = false)
+    private List<LikePost> likes;
 
     public BlogPost() {}
 
@@ -41,12 +45,12 @@ public class BlogPost extends BaseEntity {
         this.entry = entry;
     }
 
-    public int getLikes() {
-        return likes;
+    public void setLikes(List<LikePost> likes) {
+        this.likes = likes;
     }
 
-    public void setLikes(int likes) {
-        this.likes = likes;
+    public List<LikePost> getLikes() {
+        return likes;
     }
 
     public static long getSerialversionuid() {

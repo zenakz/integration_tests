@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.iis.mto.integration.api.request.LikePostRequest;
 import edu.iis.mto.integration.api.request.PostRequest;
 import edu.iis.mto.integration.api.request.UserRequest;
 import edu.iis.mto.integration.dto.PostData;
@@ -69,11 +68,11 @@ public class BlogApi {
     }
 
     @ApiOperation(value = "Add like to blog post")
-    @RequestMapping(method = RequestMethod.POST, path = "/post/{id}/like", produces = "application/json")
-    public Long createPost(@PathVariable("id") Long postId, @RequestBody LikePostRequest likeRequest) {
-        logger.debug("add like to post endpoint called for data '{}'", likeRequest);
+    @RequestMapping(method = RequestMethod.POST, path = "user/{userId}/like/{postId}", produces = "application/json")
+    public Long createPost(@PathVariable("userId") Long userId, @PathVariable("postId") Long postId) {
+        logger.debug("add like to post endpoint called for userId '{}' and postId '{}'", userId, postId);
 
-        blogService.addLikeToPost(postId, likeRequest);
+        blogService.addLikeToPost(userId, postId);
         return postId;
     }
 
