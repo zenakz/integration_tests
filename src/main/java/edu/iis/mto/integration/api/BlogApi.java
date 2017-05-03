@@ -19,10 +19,12 @@ import edu.iis.mto.integration.dto.PostData;
 import edu.iis.mto.integration.dto.UserData;
 import edu.iis.mto.integration.services.BlogService;
 import edu.iis.mto.integration.services.DataFinder;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/blog")
+@Api(tags = "blog api")
 public class BlogApi {
 
     private final static Logger logger = LoggerFactory.getLogger(BlogApi.class);
