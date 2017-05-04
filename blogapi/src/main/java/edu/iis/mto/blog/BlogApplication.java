@@ -1,12 +1,12 @@
-package edu.iis.mto;
+package edu.iis.mto.blog;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Lab52Application {
+public class BlogApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Lab52Application.class, args);
+		SpringApplication.run(BlogApplication.class, args);
 	}
 }
