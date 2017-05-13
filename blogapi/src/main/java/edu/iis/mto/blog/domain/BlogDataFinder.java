@@ -1,4 +1,4 @@
-package edu.iis.mto.blog.services;
+package edu.iis.mto.blog.domain;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,6 +11,7 @@ import edu.iis.mto.blog.domain.model.BlogPost;
 import edu.iis.mto.blog.domain.model.User;
 import edu.iis.mto.blog.dto.PostData;
 import edu.iis.mto.blog.dto.UserData;
+import edu.iis.mto.blog.services.DataFinder;
 
 @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
 @Service

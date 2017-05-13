@@ -1,4 +1,4 @@
-package edu.iis.mto.blog.services;
+package edu.iis.mto.blog.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

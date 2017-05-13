@@ -1,4 +1,4 @@
-package edu.iis.mto.blog.services;
+package edu.iis.mto.blog.domain;
 
 import java.util.Optional;
 
@@ -12,6 +12,7 @@ import edu.iis.mto.blog.domain.model.AccountStatus;
 import edu.iis.mto.blog.domain.model.BlogPost;
 import edu.iis.mto.blog.domain.model.LikePost;
 import edu.iis.mto.blog.domain.model.User;
+import edu.iis.mto.blog.services.BlogService;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
