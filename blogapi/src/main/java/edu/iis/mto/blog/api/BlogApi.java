@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +25,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/blog")
+@RequestMapping(path = "/blog", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 @Api(tags = "blog api")
 public class BlogApi {
 
@@ -37,7 +38,7 @@ public class BlogApi {
     private DataFinder finder;
 
     @ApiOperation(value = "Creates new user")
-    @RequestMapping(method = RequestMethod.POST, path = "/user", produces = "application/json")
+    @RequestMapping(method = RequestMethod.POST, path = "/user")
     @ResponseStatus(HttpStatus.CREATED)
     public Long createUser(@RequestBody UserRequest userRequest) {
         logger.debug("create user endpoint called for data '{}'", userRequest);
@@ -46,7 +47,7 @@ public class BlogApi {
     }
 
     @ApiOperation(value = "get user info based on user id")
-    @RequestMapping(method = RequestMethod.GET, path = "/user/{id}", produces = "application/json")
+    @RequestMapping(method = RequestMethod.GET, path = "/user/{id}")
     @ResponseStatus(HttpStatus.OK)
     public UserData getUser(@PathVariable("id") Long userId) {
         logger.debug("get user endpoint called for user id '{}'", userId);
@@ -55,7 +56,7 @@ public class BlogApi {
     }
 
     @ApiOperation(value = "find users based on search string")
-    @RequestMapping(method = RequestMethod.GET, path = "/user/find", produces = "application/json")
+    @RequestMapping(method = RequestMethod.GET, path = "/user/find")
     public List<UserData> findUser(@RequestParam String searchString) {
         logger.debug("find users endpoint called for searchString '{}'", searchString);
         List<UserData> users = finder.findUsers(searchString);
@@ -63,7 +64,7 @@ public class BlogApi {
     }
 
     @ApiOperation(value = "Creates new blog post")
-    @RequestMapping(method = RequestMethod.POST, path = "/user/{id}/post", produces = "application/json")
+    @RequestMapping(method = RequestMethod.POST, path = "/user/{id}/post")
     public Long createPost(@PathVariable("id") Long userId, @RequestBody PostRequest postRequest) {
         logger.debug("create post endpoint called for data '{}'", postRequest);
 
@@ -71,8 +72,8 @@ public class BlogApi {
         return postId;
     }
 
-    @ApiOperation(value = "Add user like to blog post")
-    @RequestMapping(method = RequestMethod.POST, path = "user/{userId}/like/{postId}", produces = "application/json")
+    @ApiOperation(value = "Add like to blog post")
+    @RequestMapping(method = RequestMethod.POST, path = "user/{userId}/like/{postId}")
     public boolean addLikeToPost(@PathVariable("userId") Long userId, @PathVariable("postId") Long postId) {
         logger.debug("add like to post endpoint called for userId '{}' and postId '{}'", userId, postId);
 
@@ -80,7 +81,7 @@ public class BlogApi {
     }
 
     @ApiOperation(value = "get user posts based on user id")
-    @RequestMapping(method = RequestMethod.GET, path = "/user/{id}/post", produces = "application/json")
+    @RequestMapping(method = RequestMethod.GET, path = "/user/{id}/post")
     public List<PostData> getUserPosts(@PathVariable("id") Long userId) {
         logger.debug("get user posts endpoint called for user id '{}'", userId);
         List<PostData> posts = finder.getUserPosts(userId);
