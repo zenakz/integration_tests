@@ -40,7 +40,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void shouldStoreAUser() {
+    public void shouldStoreANewUser() {
         User user = new User();
         user.setFirstName("Jan");
         user.setEmail("john@domain.com");
