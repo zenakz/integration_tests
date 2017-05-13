@@ -10,10 +10,10 @@ public class User extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 50)
     private String firstName;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 50)
     private String lastName;
 
     @Column(length = 100, nullable = false, unique = true)
