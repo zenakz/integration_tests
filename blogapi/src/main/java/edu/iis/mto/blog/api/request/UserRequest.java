@@ -32,4 +32,22 @@ public class UserRequest {
         this.email = email;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof UserRequest) {
+            UserRequest other = (UserRequest) obj;
+
+            return eq(this.email, other.email);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return email.hashCode();
+    }
+
+    private boolean eq(Object val1, Object val2) {
+        return val1 != null ? val1.equals(val2) : val2 == null ? true : false;
+    }
 }

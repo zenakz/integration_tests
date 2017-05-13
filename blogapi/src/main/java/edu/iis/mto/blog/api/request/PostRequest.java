@@ -11,4 +11,17 @@ public class PostRequest {
     public void setEntry(String entry) {
         this.entry = entry;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof PostRequest) {
+            return entry.equals(((PostRequest) obj).entry);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return entry.hashCode();
+    }
 }
