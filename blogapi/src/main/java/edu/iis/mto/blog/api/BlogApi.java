@@ -52,8 +52,8 @@ public class BlogApi {
     @ResponseStatus(HttpStatus.OK)
     public UserData getUser(@PathVariable("id") Long userId) {
         logger.debug("get user endpoint called for user id '{}'", userId);
-        UserData newUser = finder.getUserData(userId);
-        return newUser;
+        UserData user = finder.getUserData(userId);
+        return user;
     }
 
     @ApiOperation(value = "find users based on email or first name or last name")
