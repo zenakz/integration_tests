@@ -34,7 +34,6 @@ public class UserRepositoryTest {
         Assert.assertThat(users, Matchers.hasSize(0));
     }
 
-    @Ignore
     @Test
     public void shouldFindOneUsersIfRepositoryContainsOneUserEntity() {
         List<User> users = repository.findAll();
