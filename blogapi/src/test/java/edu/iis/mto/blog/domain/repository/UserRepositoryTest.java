@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +26,16 @@ public class UserRepositoryTest {
     @Autowired
     private UserRepository repository;
 
+    private User user;
+
+    @Before
+    public void setUp() {
+        user = new User();
+        user.setFirstName("Jan");
+        user.setEmail("john@domain.com");
+        user.setAccountStatus(AccountStatus.NEW);
+    }
+
     @Ignore
     @Test
     public void shouldFindNoUsersIfRepositoryIsEmpty() {
@@ -34,22 +45,23 @@ public class UserRepositoryTest {
         Assert.assertThat(users, Matchers.hasSize(0));
     }
 
+    @Ignore
     @Test
     public void shouldFindOneUsersIfRepositoryContainsOneUserEntity() {
+        User persistedUser = entityManager.persist(user);
         List<User> users = repository.findAll();
 
         Assert.assertThat(users, Matchers.hasSize(1));
+        Assert.assertThat(users.get(0).getEmail(), Matchers.equalTo(persistedUser.getEmail()));
     }
 
     @Ignore
     @Test
     public void shouldStoreANewUser() {
-        User user = new User();
-        user.setFirstName("Jan");
-        user.setEmail("john@domain.com");
-        user.setAccountStatus(AccountStatus.NEW);
+
         User persistedUser = repository.save(user);
 
         Assert.assertThat(persistedUser.getId(), Matchers.notNullValue());
     }
+
 }
