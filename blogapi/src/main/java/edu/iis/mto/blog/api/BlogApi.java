@@ -66,6 +66,7 @@ public class BlogApi {
 
     @ApiOperation(value = "Creates new blog post")
     @RequestMapping(method = RequestMethod.POST, path = "/user/{id}/post")
+    @ResponseStatus(HttpStatus.CREATED)
     public Id createPost(@PathVariable("id") Long userId, @RequestBody PostRequest postRequest) {
         logger.debug("create post endpoint called for data '{}'", postRequest);
 

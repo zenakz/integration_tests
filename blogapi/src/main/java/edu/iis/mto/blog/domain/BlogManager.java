@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.iis.mto.blog.api.request.PostRequest;
 import edu.iis.mto.blog.api.request.UserRequest;
+import edu.iis.mto.blog.domain.errors.DomainError;
 import edu.iis.mto.blog.domain.model.AccountStatus;
 import edu.iis.mto.blog.domain.model.BlogPost;
 import edu.iis.mto.blog.domain.model.LikePost;
@@ -39,6 +40,9 @@ public class BlogManager extends DomainService implements BlogService {
     public boolean addLikeToPost(Long userId, Long postId) {
         User user = userRepository.findOne(userId);
         BlogPost post = blogPostRepository.findOne(postId);
+        if (post.getUser().getId().equals(userId)) {
+            throw new DomainError("cannot like own post");
+        }
         Optional<LikePost> existingLikeForPost = likePostRepository.findByUserAndPost(user, post);
         if (existingLikeForPost.isPresent()) {
             return false;
