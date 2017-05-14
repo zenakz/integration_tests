@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ public class UserRepositoryTest {
     @Autowired
     private UserRepository repository;
 
+    @Ignore
     @Test
     public void shouldFindNoUsersIfRepositoryIsEmpty() {
 
@@ -32,6 +34,7 @@ public class UserRepositoryTest {
         Assert.assertThat(users, Matchers.hasSize(0));
     }
 
+    @Ignore
     @Test
     public void shouldFindOneUsersIfRepositoryContainsOneUserEntity() {
         List<User> users = repository.findAll();
@@ -39,6 +42,7 @@ public class UserRepositoryTest {
         Assert.assertThat(users, Matchers.hasSize(1));
     }
 
+    @Ignore
     @Test
     public void shouldStoreANewUser() {
         User user = new User();
