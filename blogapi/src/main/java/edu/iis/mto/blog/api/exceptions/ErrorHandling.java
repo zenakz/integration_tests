@@ -2,6 +2,7 @@ package edu.iis.mto.blog.api.exceptions;
 
 import java.io.IOException;
 
+import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -29,6 +30,12 @@ public class ErrorHandling {
     public void domainError(DomainError exc, HttpServletResponse response) throws IOException {
         logger.error(exc.getMessage());
         response.sendError(HttpStatus.BAD_REQUEST.value(), exc.getMessage());
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public void entityNotFound(EntityNotFoundException exc, HttpServletResponse response) throws IOException {
+        logger.error(exc.getMessage());
+        response.sendError(HttpStatus.NOT_FOUND.value(), exc.getMessage());
     }
 
 }

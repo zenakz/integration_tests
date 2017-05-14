@@ -3,6 +3,8 @@ package edu.iis.mto.blog.domain;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,9 @@ public class BlogDataFinder extends DomainService implements DataFinder {
     @Override
     public UserData getUserData(Long userId) {
         User user = userRepository.findOne(userId);
+        if (user == null) {
+            throw new EntityNotFoundException(String.format("user with id %1 does not exists", userId));
+        }
         return mapper.mapToDto(user);
     }
 
