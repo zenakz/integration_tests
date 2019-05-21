@@ -1,7 +1,8 @@
 package edu.iis.mto.blog.domain;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.function.Supplier;
 
+import edu.iis.mto.blog.domain.errors.DomainError;
 import edu.iis.mto.blog.domain.repository.BlogPostRepository;
 import edu.iis.mto.blog.domain.repository.LikePostRepository;
 import edu.iis.mto.blog.domain.repository.UserRepository;
@@ -9,15 +10,25 @@ import edu.iis.mto.blog.mapper.DataMapper;
 
 public abstract class DomainService {
 
-    @Autowired
-    protected UserRepository userRepository;
+    protected final UserRepository userRepository;
 
-    @Autowired
-    protected BlogPostRepository blogPostRepository;
+    protected final BlogPostRepository blogPostRepository;
 
-    @Autowired
-    protected LikePostRepository likePostRepository;
+    protected final LikePostRepository likePostRepository;
 
-    @Autowired
-    protected DataMapper mapper;
+    protected final DataMapper mapper;
+
+    protected DomainService(UserRepository userRepository, BlogPostRepository blogPostRepository, LikePostRepository likePostRepository,
+            DataMapper mapper) {
+        this.userRepository = userRepository;
+        this.blogPostRepository = blogPostRepository;
+        this.likePostRepository = likePostRepository;
+        this.mapper = mapper;
+    }
+
+    protected Supplier<RuntimeException> domainError(String msg) {
+
+        return () -> new DomainError(msg);
+    }
+
 }
