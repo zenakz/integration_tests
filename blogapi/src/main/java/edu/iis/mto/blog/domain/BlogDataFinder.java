@@ -3,8 +3,6 @@ package edu.iis.mto.blog.domain;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.persistence.EntityNotFoundException;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +15,7 @@ import edu.iis.mto.blog.domain.repository.LikePostRepository;
 import edu.iis.mto.blog.domain.repository.UserRepository;
 import edu.iis.mto.blog.dto.PostData;
 import edu.iis.mto.blog.dto.UserData;
-import edu.iis.mto.blog.mapper.DataMapper;
+import edu.iis.mto.blog.mapper.BlogDataMapper;
 import edu.iis.mto.blog.services.DataFinder;
 
 @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
@@ -25,7 +23,7 @@ import edu.iis.mto.blog.services.DataFinder;
 public class BlogDataFinder extends DomainService implements DataFinder {
 
     protected BlogDataFinder(UserRepository userRepository, BlogPostRepository blogPostRepository, LikePostRepository likePostRepository,
-            DataMapper mapper) {
+            BlogDataMapper mapper) {
         super(userRepository, blogPostRepository, likePostRepository, mapper);
     }
 
@@ -33,9 +31,7 @@ public class BlogDataFinder extends DomainService implements DataFinder {
     public UserData getUserData(Long userId) {
         User user = userRepository.findById(userId)
                                   .orElseThrow(domainError(DomainError.USER_NOT_FOUND));
-        if (user == null) {
-            throw new EntityNotFoundException(String.format("user with id %d does not exists", userId));
-        }
+
         return mapper.mapToDto(user);
     }
 

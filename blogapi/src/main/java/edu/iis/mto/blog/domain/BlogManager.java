@@ -16,7 +16,7 @@ import edu.iis.mto.blog.domain.model.User;
 import edu.iis.mto.blog.domain.repository.BlogPostRepository;
 import edu.iis.mto.blog.domain.repository.LikePostRepository;
 import edu.iis.mto.blog.domain.repository.UserRepository;
-import edu.iis.mto.blog.mapper.DataMapper;
+import edu.iis.mto.blog.mapper.BlogDataMapper;
 import edu.iis.mto.blog.services.BlogService;
 
 @Service
@@ -24,7 +24,7 @@ import edu.iis.mto.blog.services.BlogService;
 public class BlogManager extends DomainService implements BlogService {
 
     protected BlogManager(UserRepository userRepository, BlogPostRepository blogPostRepository, LikePostRepository likePostRepository,
-            DataMapper mapper) {
+            BlogDataMapper mapper) {
         super(userRepository, blogPostRepository, likePostRepository, mapper);
     }
 

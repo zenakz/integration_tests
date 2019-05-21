@@ -4,8 +4,8 @@ import org.apache.http.HttpStatus;
 import org.json.JSONObject;
 import org.junit.Test;
 
-import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.http.ContentType;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 
 public class CreateUserTest extends FunctionalTests {
 
@@ -14,7 +14,15 @@ public class CreateUserTest extends FunctionalTests {
     @Test
     public void postFormWithMalformedRequestDataReturnsBadRequest() {
         JSONObject jsonObj = new JSONObject().put("email", "tracy@domain.com");
-        RestAssured.given().accept(ContentType.JSON).header("Content-Type", "application/json;charset=UTF-8")
-                .body(jsonObj.toString()).expect().log().all().statusCode(HttpStatus.SC_CREATED).when().post(USER_API);
+        RestAssured.given()
+                   .accept(ContentType.JSON)
+                   .header("Content-Type", "application/json;charset=UTF-8")
+                   .body(jsonObj.toString())
+                   .expect()
+                   .log()
+                   .all()
+                   .statusCode(HttpStatus.SC_CREATED)
+                   .when()
+                   .post(USER_API);
     }
 }

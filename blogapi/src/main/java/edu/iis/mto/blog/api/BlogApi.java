@@ -77,7 +77,6 @@ public class BlogApi {
     @PostMapping(path = "user/{userId}/like/{postId}")
     public boolean addLikeToPost(@PathVariable("userId") Long userId, @PathVariable("postId") Long postId) {
         LOGGER.debug("add like to post endpoint called for userId '{}' and postId '{}'", userId, postId);
-
         return blogService.addLikeToPost(userId, postId);
     }
 
@@ -88,8 +87,15 @@ public class BlogApi {
         return finder.getUserPosts(userId);
     }
 
-    private Id id(Long userId) {
-        return new Id(userId);
+    @ApiOperation(value = "get single post based on post id")
+    @GetMapping(path = "/post")
+    public PostData getPosts(@PathVariable("id") Long postId) {
+        LOGGER.debug("get post by id '{}'", postId);
+        return finder.getPost(postId);
+    }
+
+    private Id id(Long id) {
+        return new Id(id);
     }
 
 }
