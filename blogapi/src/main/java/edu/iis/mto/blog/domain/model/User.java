@@ -23,8 +23,6 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private AccountStatus accountStatus;
 
-    public User() {}
-
     public String getFirstName() {
         return firstName;
     }

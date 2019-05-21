@@ -2,7 +2,7 @@ package edu.iis.mto.blog.rest.test;
 
 import org.junit.BeforeClass;
 
-import com.jayway.restassured.RestAssured;
+import io.restassured.RestAssured;
 
 public class FunctionalTests {
 
@@ -26,7 +26,6 @@ public class FunctionalTests {
             baseHost = "http://localhost";
         }
         RestAssured.baseURI = baseHost;
-
     }
 
 }

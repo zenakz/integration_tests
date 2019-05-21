@@ -7,7 +7,7 @@ import edu.iis.mto.blog.domain.model.User;
 import edu.iis.mto.blog.dto.PostData;
 import edu.iis.mto.blog.dto.UserData;
 
-public interface DataMapper {
+public interface BlogDataMapper {
 
     User mapToEntity(UserRequest userRequest);
 

@@ -12,7 +12,7 @@ import edu.iis.mto.blog.dto.PostData;
 import edu.iis.mto.blog.dto.UserData;
 
 @Component
-public class BlogDataMapperImpl implements DataMapper {
+public class BlogDataMapperImpl implements BlogDataMapper {
 
     private final ModelMapper mapper = new ModelMapper();
 
@@ -45,7 +45,8 @@ public class BlogDataMapperImpl implements DataMapper {
 
             @Override
             protected void configure() {
-                map().setLikesCount(source.getLikes().size());
+                map().setLikesCount(source.getLikes()
+                                          .size());
 
             }
         };

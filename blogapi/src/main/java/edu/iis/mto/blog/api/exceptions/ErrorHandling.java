@@ -17,24 +17,23 @@ import edu.iis.mto.blog.domain.errors.DomainError;
 @ControllerAdvice
 public class ErrorHandling {
 
-    private final static Logger logger = LoggerFactory.getLogger(ErrorHandling.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ErrorHandling.class);
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public void dataIntegrityException(DataIntegrityViolationException exc, HttpServletResponse response)
-            throws IOException {
-        logger.error(exc.getMessage());
+    public void dataIntegrityException(DataIntegrityViolationException exc, HttpServletResponse response) throws IOException {
+        LOGGER.error(exc.getMessage());
         response.sendError(HttpStatus.CONFLICT.value(), exc.getMessage());
     }
 
     @ExceptionHandler(DomainError.class)
     public void domainError(DomainError exc, HttpServletResponse response) throws IOException {
-        logger.error(exc.getMessage());
+        LOGGER.error(exc.getMessage());
         response.sendError(HttpStatus.BAD_REQUEST.value(), exc.getMessage());
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
     public void entityNotFound(EntityNotFoundException exc, HttpServletResponse response) throws IOException {
-        logger.error(exc.getMessage());
+        LOGGER.error(exc.getMessage());
         response.sendError(HttpStatus.NOT_FOUND.value(), exc.getMessage());
     }
 

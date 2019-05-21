@@ -15,7 +15,7 @@ import edu.iis.mto.blog.api.request.UserRequest;
 import edu.iis.mto.blog.domain.model.AccountStatus;
 import edu.iis.mto.blog.domain.model.User;
 import edu.iis.mto.blog.domain.repository.UserRepository;
-import edu.iis.mto.blog.mapper.DataMapper;
+import edu.iis.mto.blog.mapper.BlogDataMapper;
 import edu.iis.mto.blog.services.BlogService;
 
 @RunWith(SpringRunner.class)
@@ -26,7 +26,7 @@ public class BlogManagerTest {
     UserRepository userRepository;
 
     @Autowired
-    DataMapper dataMapper;
+    BlogDataMapper dataMapper;
 
     @Autowired
     BlogService blogService;

@@ -19,8 +19,11 @@ public class SwaggerConfiguration {
 
     @Bean
     public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select().apis(RequestHandlerSelectors.any())
-                .paths(apiPath()).build();
+        return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo())
+                                                      .select()
+                                                      .apis(RequestHandlerSelectors.any())
+                                                      .paths(apiPath())
+                                                      .build();
     }
 
     private Predicate<String> apiPath() {
@@ -28,7 +31,10 @@ public class SwaggerConfiguration {
     }
 
     private ApiInfo apiInfo() {
-        return new ApiInfoBuilder().title("MTO IT").description("integration tests laboratory").license("MIT")
-                .version("1.0").build();
+        return new ApiInfoBuilder().title("MTO IT")
+                                   .description("integration tests laboratory")
+                                   .license("MIT")
+                                   .version("1.0")
+                                   .build();
     }
 }
