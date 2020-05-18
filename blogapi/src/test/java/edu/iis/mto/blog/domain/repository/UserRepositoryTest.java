@@ -7,7 +7,6 @@ import static org.junit.Assert.assertThat;
 
 import java.util.List;
 
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -55,7 +54,7 @@ public class UserRepositoryTest {
         User persistedUser = entityManager.persist(user);
         List<User> users = repository.findAll();
 
-        assertThat(users, Matchers.hasSize(1));
+        assertThat(users, hasSize(1));
         assertThat(users.get(0)
                         .getEmail(),
                 equalTo(persistedUser.getEmail()));
