@@ -23,12 +23,12 @@ import edu.iis.mto.blog.dto.PostData;
 import edu.iis.mto.blog.dto.UserData;
 import edu.iis.mto.blog.services.BlogService;
 import edu.iis.mto.blog.services.DataFinder;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping(path = "/blog", produces = MediaType.APPLICATION_JSON_VALUE)
-@Api(tags = "blog api")
+@Tag(name = "blog", description = "blog API")
 public class BlogApi {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BlogApi.class);
@@ -39,7 +39,7 @@ public class BlogApi {
     @Autowired
     private DataFinder finder;
 
-    @ApiOperation(value = "Creates new user")
+    @Operation(summary = "Creates new user")
     @PostMapping(path = "/user")
     @ResponseStatus(HttpStatus.CREATED)
     public Id createUser(@RequestBody UserRequest userRequest) {
@@ -48,7 +48,7 @@ public class BlogApi {
         return id(userId);
     }
 
-    @ApiOperation(value = "get user info based on user id")
+    @Operation(summary = "get user info based on user id")
     @GetMapping(path = "/user/{id}")
     @ResponseStatus(HttpStatus.OK)
     public UserData getUser(@PathVariable("id") Long userId) {
@@ -56,14 +56,14 @@ public class BlogApi {
         return finder.getUserData(userId);
     }
 
-    @ApiOperation(value = "find users based on email or first name or last name")
+    @Operation(summary = "find users based on email or first name or last name")
     @GetMapping(path = "/user/find")
     public List<UserData> findUser(@RequestParam String searchString) {
         LOGGER.debug("find users endpoint called for searchString '{}'", searchString);
         return finder.findUsers(searchString);
     }
 
-    @ApiOperation(value = "Creates new blog post")
+    @Operation(summary = "Creates new blog post")
     @PostMapping(path = "/user/{userid}/post")
     @ResponseStatus(HttpStatus.CREATED)
     public Id createPost(@PathVariable("userid") Long userId, @RequestBody PostRequest postRequest) {
@@ -73,21 +73,21 @@ public class BlogApi {
         return id(postId);
     }
 
-    @ApiOperation(value = "Add like to blog post")
+    @Operation(summary = "Add like to blog post")
     @PostMapping(path = "user/{userId}/like/{postId}")
     public boolean addLikeToPost(@PathVariable("userId") Long userId, @PathVariable("postId") Long postId) {
         LOGGER.debug("add like to post endpoint called for userId '{}' and postId '{}'", userId, postId);
         return blogService.addLikeToPost(userId, postId);
     }
 
-    @ApiOperation(value = "get user posts based on user id")
+    @Operation(summary = "get user posts based on user id")
     @GetMapping(path = "/user/{id}/post")
     public List<PostData> getUserPosts(@PathVariable("id") Long userId) {
         LOGGER.debug("get user posts endpoint called for user id '{}'", userId);
         return finder.getUserPosts(userId);
     }
 
-    @ApiOperation(value = "get single post based on post id")
+    @Operation(summary = "get single post based on post id")
     @GetMapping(path = "/post/{id}")
     public PostData getPosts(@PathVariable("id") Long postId) {
         LOGGER.debug("get post by id '{}'", postId);
