@@ -1,11 +1,13 @@
 package edu.iis.mto.blog.domain;
 
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.verify;
+
 import org.hamcrest.Matchers;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mockito;
+import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -23,21 +25,23 @@ import edu.iis.mto.blog.services.BlogService;
 public class BlogManagerTest {
 
     @MockBean
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    BlogDataMapper dataMapper;
+    private BlogDataMapper dataMapper;
 
     @Autowired
-    BlogService blogService;
+    private BlogService blogService;
+
+    @Captor
+    private ArgumentCaptor<User> userParam;
 
     @Test
     public void creatingNewUserShouldSetAccountStatusToNEW() {
         blogService.createUser(new UserRequest("John", "Steward", "john@domain.com"));
-        ArgumentCaptor<User> userParam = ArgumentCaptor.forClass(User.class);
-        Mockito.verify(userRepository).save(userParam.capture());
+        verify(userRepository).save(userParam.capture());
         User user = userParam.getValue();
-        Assert.assertThat(user.getAccountStatus(), Matchers.equalTo(AccountStatus.NEW));
+        assertThat(user.getAccountStatus(), Matchers.equalTo(AccountStatus.NEW));
     }
 
 }

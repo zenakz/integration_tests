@@ -1,12 +1,12 @@
 package edu.iis.mto.blog.api;
 
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -42,8 +42,7 @@ public class BlogApiTest {
         user.setEmail("john@domain.com");
         user.setFirstName("John");
         user.setLastName("Steward");
-        Mockito.when(blogService.createUser(user))
-               .thenReturn(newUserId);
+        when(blogService.createUser(user)).thenReturn(newUserId);
         String content = writeJson(user);
 
         mvc.perform(post("/blog/user").contentType(MediaType.APPLICATION_JSON)

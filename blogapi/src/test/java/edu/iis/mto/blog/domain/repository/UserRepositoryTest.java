@@ -1,9 +1,13 @@
 package edu.iis.mto.blog.domain.repository;
 
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
+
 import java.util.List;
 
 import org.hamcrest.Matchers;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -42,7 +46,7 @@ public class UserRepositoryTest {
 
         List<User> users = repository.findAll();
 
-        Assert.assertThat(users, Matchers.hasSize(0));
+        assertThat(users, hasSize(0));
     }
 
     @Ignore
@@ -51,8 +55,10 @@ public class UserRepositoryTest {
         User persistedUser = entityManager.persist(user);
         List<User> users = repository.findAll();
 
-        Assert.assertThat(users, Matchers.hasSize(1));
-        Assert.assertThat(users.get(0).getEmail(), Matchers.equalTo(persistedUser.getEmail()));
+        assertThat(users, Matchers.hasSize(1));
+        assertThat(users.get(0)
+                        .getEmail(),
+                equalTo(persistedUser.getEmail()));
     }
 
     @Ignore
@@ -61,7 +67,7 @@ public class UserRepositoryTest {
 
         User persistedUser = repository.save(user);
 
-        Assert.assertThat(persistedUser.getId(), Matchers.notNullValue());
+        assertThat(persistedUser.getId(), notNullValue());
     }
 
 }
