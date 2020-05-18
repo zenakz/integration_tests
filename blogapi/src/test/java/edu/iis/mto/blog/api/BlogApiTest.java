@@ -42,16 +42,20 @@ public class BlogApiTest {
         user.setEmail("john@domain.com");
         user.setFirstName("John");
         user.setLastName("Steward");
-        Mockito.when(blogService.createUser(user)).thenReturn(newUserId);
+        Mockito.when(blogService.createUser(user))
+               .thenReturn(newUserId);
         String content = writeJson(user);
 
-        mvc.perform(post("/blog/user").contentType(MediaType.APPLICATION_JSON_UTF8)
-                .accept(MediaType.APPLICATION_JSON_UTF8).content(content)).andExpect(status().isCreated())
-                .andExpect(content().string(writeJson(new Id(newUserId))));
+        mvc.perform(post("/blog/user").contentType(MediaType.APPLICATION_JSON)
+                                      .accept(MediaType.APPLICATION_JSON)
+                                      .content(content))
+           .andExpect(status().isCreated())
+           .andExpect(content().string(writeJson(new Id(newUserId))));
     }
 
     private String writeJson(Object obj) throws JsonProcessingException {
-        return new ObjectMapper().writer().writeValueAsString(obj);
+        return new ObjectMapper().writer()
+                                 .writeValueAsString(obj);
     }
 
 }
