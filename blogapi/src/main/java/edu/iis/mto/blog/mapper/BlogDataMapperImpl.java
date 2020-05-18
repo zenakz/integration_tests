@@ -1,7 +1,6 @@
 package edu.iis.mto.blog.mapper;
 
 import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
 import org.springframework.stereotype.Component;
 
 import edu.iis.mto.blog.api.request.PostRequest;
@@ -41,16 +40,20 @@ public class BlogDataMapperImpl implements BlogDataMapper {
     }
 
     private void configureMapper() {
-        PropertyMap<BlogPost, PostData> postMap = new PropertyMap<BlogPost, PostData>() {
-
-            @Override
-            protected void configure() {
-                map().setLikesCount(source.getLikes()
-                                          .size());
-
-            }
-        };
-        mapper.addMappings(postMap);
+        // TypeMap<BlogPost, PostData> typeMap = mapper.createTypeMap(BlogPost.class, PostData.class);
+        // typeMap.addMappings(mapper -> mapper.map(blogPost -> blogPost.getLikes()
+        // .size(),
+        // // PostData::setLikesCount));
+        // PropertyMap<BlogPost, PostData> postMap = new PropertyMap<BlogPost, PostData>() {
+        //
+        // @Override
+        // protected void configure() {
+        // map().setLikesCount(source.getLikes()
+        // .size());
+        //
+        // }
+        // };
+        // mapper.addMappings(postMap);
     }
 
 }

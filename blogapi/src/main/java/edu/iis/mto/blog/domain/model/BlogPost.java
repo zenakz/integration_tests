@@ -1,5 +1,6 @@
 package edu.iis.mto.blog.domain.model;
 
+import java.beans.Transient;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -50,6 +51,11 @@ public class BlogPost extends BaseEntity {
 
     public List<LikePost> getLikes() {
         return likes;
+    }
+
+    @Transient
+    public int getLikesCount() {
+        return likes.size();
     }
 
     public static long getSerialversionuid() {

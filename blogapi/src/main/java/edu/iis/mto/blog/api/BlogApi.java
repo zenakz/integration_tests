@@ -27,7 +27,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping(path = "/blog", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(path = "/blog", produces = MediaType.APPLICATION_JSON_VALUE)
 @Api(tags = "blog api")
 public class BlogApi {
 
@@ -64,10 +64,10 @@ public class BlogApi {
     }
 
     @ApiOperation(value = "Creates new blog post")
-    @PostMapping(path = "/user/{id}/post")
+    @PostMapping(path = "/user/{userid}/post")
     @ResponseStatus(HttpStatus.CREATED)
-    public Id createPost(@PathVariable("id") Long userId, @RequestBody PostRequest postRequest) {
-        LOGGER.debug("create post endpoint called for data '{}'", postRequest);
+    public Id createPost(@PathVariable("userid") Long userId, @RequestBody PostRequest postRequest) {
+        LOGGER.debug("creates post endpoint called for data '{}'", postRequest);
 
         Long postId = blogService.createPost(userId, postRequest);
         return id(postId);
@@ -88,7 +88,7 @@ public class BlogApi {
     }
 
     @ApiOperation(value = "get single post based on post id")
-    @GetMapping(path = "/post")
+    @GetMapping(path = "/post/{id}")
     public PostData getPosts(@PathVariable("id") Long postId) {
         LOGGER.debug("get post by id '{}'", postId);
         return finder.getPost(postId);
