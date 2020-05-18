@@ -1,12 +1,12 @@
 package edu.iis.mto.blog.rest.test;
 
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 
 import io.restassured.RestAssured;
 
 public class FunctionalTests {
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         String port = System.getProperty("server.port");
         if (port == null) {
