@@ -33,10 +33,7 @@ public class UserRepositoryTest {
 
     @Before
     public void setUp() {
-        user = new User();
-        user.setFirstName("Jan");
-        user.setEmail("john@domain.com");
-        user.setAccountStatus(AccountStatus.NEW);
+        user = createUser("Jan", "","john@domain.com");
         repository.deleteAll();
     }
 
@@ -67,4 +64,13 @@ public class UserRepositoryTest {
         assertThat(persistedUser.getId(), notNullValue());
     }
 
+
+    public User createUser(String name, String lastName, String email){
+        user = new User();
+        user.setFirstName(name);
+        user.setLastName(lastName);
+        user.setEmail(email);
+        user.setAccountStatus(AccountStatus.NEW);
+        return user;
+    }
 }
