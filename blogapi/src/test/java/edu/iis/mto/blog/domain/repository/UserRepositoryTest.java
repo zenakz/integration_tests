@@ -40,7 +40,8 @@ import edu.iis.mto.blog.domain.model.User;
     }
 
     @Test public void shouldFindOneUsersIfRepositoryContainsOneUserEntity() {
-        User persistedUser = entityManager.persist(user);
+        User persistedUser = entityManager.
+                                                  persist(user);
         List<User> users = repository.findAll();
 
         assertThat(users, hasSize(1));

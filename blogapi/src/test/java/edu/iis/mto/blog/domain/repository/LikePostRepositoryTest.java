@@ -90,8 +90,8 @@ import static org.junit.Assert.*;
 
     public BlogPost createPost() {
         BlogPost post = new BlogPost();
-        blogPost.setUser(user);
-        blogPost.setEntry("testEntry");
+        post.setUser(user);
+        post.setEntry("testEntry");
         return post;
     }
 
