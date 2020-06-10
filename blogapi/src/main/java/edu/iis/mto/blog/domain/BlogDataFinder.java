@@ -3,6 +3,7 @@ package edu.iis.mto.blog.domain;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import edu.iis.mto.blog.domain.model.AccountStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,8 @@ import edu.iis.mto.blog.dto.PostData;
 import edu.iis.mto.blog.dto.UserData;
 import edu.iis.mto.blog.mapper.BlogDataMapper;
 import edu.iis.mto.blog.services.DataFinder;
+
+import static edu.iis.mto.blog.domain.errors.DomainError.USER_REMOVED;
 
 @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
 @Service
@@ -56,6 +59,7 @@ public class BlogDataFinder extends DomainService implements DataFinder {
     public List<PostData> getUserPosts(Long userId) {
         User user = userRepository.findById(userId)
                                   .orElseThrow(domainError(DomainError.USER_NOT_FOUND));
+        if(user.getAccountStatus().equals(AccountStatus.REMOVED)) throw new DomainError(USER_REMOVED);
         List<BlogPost> posts = blogPostRepository.findByUser(user);
         return posts.stream()
                     .map(mapper::mapToDto)
