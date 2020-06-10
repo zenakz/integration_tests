@@ -69,7 +69,13 @@ public class BlogApiTest {
                 .content(content))
                 .andExpect(status().is(409));
     }
-    
+
+    @Test
+    public void gettingWrongUserDataShouldGiveNoFoundStatus() throws Exception {
+        when(finder.getUserData(-1L)).thenThrow(new EntityNotFoundException(USER_NOT_FOUND));
+
+        this.mvc.perform(get("/blog/user/" + -1L)).andExpect(status().is(404));
+    }
 
     private String writeJson(Object obj) throws JsonProcessingException {
         return new ObjectMapper().writer().writeValueAsString(obj);
