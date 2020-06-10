@@ -7,13 +7,13 @@ import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.Is.is;
 
-public class SearchTest {
+public class UserSearchTest {
 
-    private static final String CONFIRMED_USER_API = "blog/user/1/post";
-    private static final String REMOVED_USER_API = "/blog/user/4/post";
+    private static final String SEARCH_API = "blog/user/find?searchString=";
+
 
     @Test
-    public void searchByConfirmedUserShouldEndInSuccess() {
+    public void searchForConfirmedUserShouldEndInSuccess() {
         given().accept(ContentType.JSON)
                 .header("Content-Type", "application/json;charset=UTF-8")
                 .expect()
@@ -21,25 +21,13 @@ public class SearchTest {
                 .all()
                 .statusCode(HttpStatus.SC_OK)
                 .when()
-                .get(CONFIRMED_USER_API)
+                .get(SEARCH_API + "John")
                 .then()
                 .body("size()", is(1));
     }
 
     @Test
-    public void searchByRemovedUserShouldFail() {
-        given().accept(ContentType.JSON)
-                .header("Content-Type", "application/json;charset=UTF-8")
-                .expect()
-                .log()
-                .all()
-                .statusCode(HttpStatus.SC_BAD_REQUEST)
-                .when()
-                .get(REMOVED_USER_API);
-    }
-
-    @Test
-    public void searchResultShouldHaveProperLikesCount() {
+    public void searchForRemovedUserShouldEndInSuccess() {
         given().accept(ContentType.JSON)
                 .header("Content-Type", "application/json;charset=UTF-8")
                 .expect()
@@ -47,8 +35,10 @@ public class SearchTest {
                 .all()
                 .statusCode(HttpStatus.SC_OK)
                 .when()
-                .get(CONFIRMED_USER_API)
+                .get(SEARCH_API + "deleted@domain.com")
                 .then()
-                .body("get(0).likesCount", is(0));
+                .body("size()", is(0));
     }
+
+
 }
