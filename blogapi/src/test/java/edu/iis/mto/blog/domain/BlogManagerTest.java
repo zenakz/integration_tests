@@ -68,6 +68,7 @@ import java.util.Optional;
 
     @Test public void userWithNewAccountShouldNotBeAbleToLikePost() {
         User postCreator = prepUser();
+        postCreator.setAccountStatus(AccountStatus.CONFIRMED);
         blogService.createPost(postCreator.getId(), new PostRequest());
 
         verify(blogPostRepository).save(blogPostParam.capture());
